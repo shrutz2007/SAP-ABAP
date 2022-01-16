@@ -1,0 +1,54 @@
+REPORT Z4.
+data c type i.
+selection-screen begin of block b2 with frame title t2.
+selection-screen begin of line.
+    selection-screen comment 8(20) lb1.
+    parameters a type i default 10 obligatory.
+selection-screen end of line.
+
+
+selection-screen begin of line.
+    selection-screen comment 8(20) lb2.
+    parameters b type i default 20 obligatory.
+selection-screen end of line.
+selection-screen end of block b2.
+
+
+selection-screen begin of block b1 with frame title t1.
+parameters : r1 radiobutton group g1,
+             r2 radiobutton group g1,
+             r3 radiobutton group g1,
+             r4 radiobutton group g1,
+             r5 radiobutton group g1 default 'X'.
+selection-screen end of block b1.
+
+
+start-of-selection.
+    if r1 = 'X'.
+      c = a + b.
+      write : /'Addition is:',c.
+    elseif r2 = 'X'.
+      c = a - b.
+      if c >= 0.
+          write : /'Substraction is:',c.
+      else.
+          write : /'Substraction is -' no-gap,c no-sign left-justified.
+      endif.
+
+    elseif r3 = 'X'.
+      c = a * b.
+      write : /'Multiplication is:',c.
+
+    elseif r4 = 'X'.
+      c = a / b.
+      write : /'Division is:',c.
+
+    else.
+      write : /'None choose'.
+    endif.
+
+initialization.
+lb1 = 'Enter first number'.
+lb2 = 'Enter second number'.
+t1 = 'Arithmatic Operations'.
+t2 = 'User Input'.

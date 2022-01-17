@@ -1,0 +1,91 @@
+REPORT Z12.
+
+data c type i.
+data : str1 type string,
+       str2 type string,
+       temp type string,
+       msg type string,
+       len type i,
+       pos type i.
+
+
+selection-screen begin of block b2 with frame title t2.
+selection-screen begin of line.
+    selection-screen comment 8(20) lb1.
+    parameters a type i default 10 obligatory.
+selection-screen end of line.
+
+selection-screen begin of line.
+    selection-screen comment 8(20) lb2.
+    parameters b type i default 20 obligatory.
+selection-screen end of line.
+selection-screen end of block b2.
+
+
+selection-screen begin of block b1 with frame title t1.
+parameters : r1 radiobutton group g1 USER-COMMAND FC1,
+*user command occurs at only start of parameter (fc1).
+             r2 radiobutton group g1,
+             r3 radiobutton group g1,
+             r4 radiobutton group g1,
+             r5 radiobutton group g1 default 'X'.
+selection-screen end of block b1.
+
+
+
+at SELECTION-SCREEN ON RADIOBUTTON GROUP g1.
+  case sy-ucomm.
+  when 'FC1'.
+    if r1 = 'X'.
+      c = a + b.
+      str1 = 'Sum of Two numbers is : '.
+      str2 = c.
+      CLEAR msg.
+      CONCATENATE str1 str2 into msg SEPARATED BY space.
+      MESSAGE msg type 'I'.
+    elseif r2 = 'X'.
+      c = a - b.
+      if c >= 0.
+        str1 = 'Difference of Two numbers is :'.
+        str2 = c.
+        clear msg.
+        CONCATENATE str1 str2 into msg SEPARATED BY space.
+      else.
+        str1 = 'Difference of Two numbers is -'.
+        str2 = c.
+        CLEAR temp.
+        CONCATENATE str1 str2 into temp SEPARATED BY space.
+        len = strlen( temp ).
+        pos = len - 1.
+        CLEAR msg.
+        msg = temp+0(pos).
+      endif.
+      MESSAGE msg type 'I'.
+
+    elseif r3 = 'X'.
+      c = a * b.
+      str1 = 'Miltiplication of Two number is :'.
+      str2 = c.
+      CLEAR msg.
+      CONCATENATE str1 str2 into msg SEPARATED BY space.
+      MESSAGE msg type 'I'.
+
+
+    elseif r4 = 'X'.
+      c = a / b.
+      str1 = 'Division of Two number is :'.
+      str2 = c.
+      CLEAR msg.
+      CONCATENATE str1 str2 into msg SEPARATED BY space.
+      MESSAGE msg type 'I'.
+
+    else.
+      MESSAGE 'none' type 'I'.
+    endif.
+ENDCASE.
+
+initialization.
+lb1 = 'Enter first number'.
+lb2 = 'Enter second number'.
+t1 = 'Arithmatic Operations'.
+t2 = 'User Input'.

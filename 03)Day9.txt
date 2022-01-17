@@ -1,0 +1,30 @@
+REPORT Z12.
+
+PARAMETERS : a type i DEFAULT 10 OBLIGATORY,
+             b TYPE i DEFAULT 20 OBLIGATORY,
+             c type i.
+
+SELECTION-SCREEN skip 2.
+SELECTION-SCREEN PUSHBUTTON 6(12) b1 USER-COMMAND f1.
+SELECTION-SCREEN PUSHBUTTON 20(12) b2 USER-COMMAND f2.
+SELECTION-SCREEN SKIP 2.
+SELECTION-SCREEN PUSHBUTTON 10(12) b3 USER-COMMAND f3.
+
+INITIALIZATION.
+ b1 = 'Addition'.
+ b2 = 'Clear'.
+ b3 = 'Exit'.
+
+at SELECTION-SCREEN.
+ CASE sy-ucomm.
+ when 'F1'.
+   c = a + b.
+
+ WHEN 'F2'.
+  CLEAR : a,
+          b,
+          c.
+
+ WHEN 'F3'.
+  leave PROGRAM.
+ENDCASE.

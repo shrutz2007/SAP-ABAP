@@ -1,0 +1,31 @@
+REPORT Z12.
+
+PARAMETERS : a type i DEFAULT 10 OBLIGATORY,
+             b TYPE i DEFAULT 20 OBLIGATORY.
+data c type i.
+
+PARAMETERS : c1 as CHECKBOX,
+             c2 AS CHECKBOX,
+             c3 AS CHECKBOX,
+             c4 AS CHECKBOX.
+
+START-OF-SELECTION.
+  if c1 = 'X'.
+    c = a + b.
+    WRITE :/ 'Sum is : ',c.
+  ENDIF.
+
+  IF c2 = 'X'.
+    c = a - b.
+      write : /'Difference is :',c.
+  ENDIF.
+
+  if c3 = 'X'.
+    c = a * b.
+    WRITE :/ 'Multiplication is :',c.
+  ENDIF.
+
+  if c4 = 'X'.
+    c = a / b.
+    WRITE :/ 'Division is :',c.
+  ENDIF.

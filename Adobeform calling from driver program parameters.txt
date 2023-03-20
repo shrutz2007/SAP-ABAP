@@ -1,0 +1,39 @@
+*&---------------------------------------------------------------------*
+*& Report  ZSJ_ADOBEKNA1
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+
+REPORT  ZSJ_ADOBEKNA1.
+
+DATA : it_kna1 TYPE zsj_ttkna1,
+       wa_out TYPE sfpoutputparams.
+
+PARAMETERS : p_land1 TYPE kna1-land1 DEFAULT 'IN'.
+
+wa_out-nodialog = space.
+wa_out-preview = 'X'.
+
+CALL FUNCTION 'FP_JOB_OPEN'
+  CHANGING
+    IE_OUTPUTPARAMS       = wa_out.
+
+DATA : lv_fname TYPE funcname,
+       gv_fm_name      TYPE rs38l_fnam.
+
+CALL FUNCTION 'FP_FUNCTION_MODULE_NAME'
+  EXPORTING
+    I_NAME                     = 'ZSJ_FKNA1'
+    "v_country                  = p_land1
+ IMPORTING
+   E_FUNCNAME                 = lv_fname.
+*   E_INTERFACE_TYPE           =
+*   EV_FUNCNAME_INBOUND        =
+          .
+CALL FUNCTION lv_fname
+  EXPORTING
+    v_country = p_land1.
+
+CALL FUNCTION 'FP_JOB_CLOSE'.
